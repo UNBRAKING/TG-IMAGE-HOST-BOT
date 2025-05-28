@@ -274,7 +274,20 @@ bot.command('broadcast', async (ctx) => {
   ctx.reply(`✅ Broadcast finished!\nSent: ${sent}\nFailed: ${failed}`);
 });
 
-bot.telegram.sendMessage(BOT_OWNER_ID, "Bot is Ready!").catch(console.error);
+(async () => {
+  try {
+    await bot.launch();
+    console.log("Bot is Ready!");
+
+    // Owner ko message bhejein (ab bot ready hai)
+    await bot.telegram.sendMessage(BOT_OWNER_ID, "Bot is Ready!");
+    // Agar chaho to log channel me bhi bhej sakte ho:
+    // await bot.telegram.sendMessage(LOG_CHANNEL_ID, "Bot is Ready!");
+
+  } catch (e) {
+    console.error("Bot failed to start or send ready message:", e);
+  }
+})();
 
 // Add this function anywhere in your file (top or above processImageUpload)
 function escapeMarkdownV2(text) {
