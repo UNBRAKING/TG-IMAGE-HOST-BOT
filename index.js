@@ -4,6 +4,7 @@ const FormData = require('form-data');
 const fs = require('fs');
 const path = require('path');
 const mongoose = require('mongoose');
+const http = require('http');
 
 const Token = "7444390857:AAFkFJF6kfZbjhwK_i5P4tZMshya0vBHR9w";
 const ApiKey = "a7278af78beb6ae9d931f3ae9f0230d7";
@@ -293,3 +294,8 @@ bot.command('broadcast', async (ctx) => {
 function escapeMarkdownV2(text) {
   return text.replace(/([_*\[\]()~`>#+\-=|{}.!\\])/g, '\\$1');
 }
+
+const PORT = process.env.PORT || 3000;
+http.createServer((req, res) => {
+  res.end("Bot is running!");
+}).listen(PORT);
